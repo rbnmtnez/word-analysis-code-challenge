@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/src/WordAnalysis.API/bin
+/src/WordAnalysis.API/obj
+/src/WordAnalysis.Application/bin
+/src/WordAnalysis.Application/obj
+/src/WordAnalysis.Domain/bin
+/src/WordAnalysis.Domain/obj
+/src/WordAnalysis.Host/bin
+/src/WordAnalysis.Host/obj
+/src/WordAnalysis.Infrastructure/bin
+/src/WordAnalysis.Infrastructure/obj
+/src/WordAnalysis.Jobs/bin
+/src/WordAnalysis.Jobs/obj
