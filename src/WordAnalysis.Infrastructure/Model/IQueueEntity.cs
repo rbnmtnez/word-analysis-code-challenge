@@ -8,7 +8,5 @@ namespace WordAnalysis.Infrastructure.Model
 {
     public interface IQueueEntity
     {
-        public string Type { get; set; }
-        public string Data { get; set; }
     }
 }

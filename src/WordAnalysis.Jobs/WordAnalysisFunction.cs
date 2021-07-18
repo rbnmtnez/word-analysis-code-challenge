@@ -1,18 +1,32 @@
 using System;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
+using Newtonsoft.Json;
+using WordAnalysis.Domain.Commands;
+using Microsoft.Azure.Functions.Worker;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace WordAnalysis.Jobs
 {
-    public static class WordAnalysisFunction
+    public class WordAnalysisFunction
     {
-        [FunctionName("processWordAnalysisCommand")]
-        public static void Run([QueueTrigger("%ConnectionStrings:QueueStorageQueueName%", Connection = "ConnectionStrings:QueueStorageConnectionString")]string myQueueItem, ILogger log)
+        [Function("processWordAnalysisCommand")]
+        public async Task ProcessWordAnalysisCommandAsync(
+            [QueueTrigger("%ConnectionStrings:QueueStorageQueueName%", Connection = "ConnectionStrings:QueueStorageConnectionString")]string queueItem,
+            FunctionContext context)
         {
-            //TODO > MAKE ASYNC 
+            ILogger logger = context.GetLogger("ProcessWordAnalysisCommand");
+            try
+            {
+                logger.LogInformation($"C# Queue trigger function processed: {queueItem}");
 
-            log.LogInformation($"C# Queue trigger function processed: {myQueueItem}");
+                ExternalWordCountCalculateCommand command = JsonConvert.DeserializeObject<ExternalWordCountCalculateCommand>(queueItem);
+
+            }
+            catch(Exception ex)
+            {
+                logger.LogError($"Error processing word analysis command", ex);
+                throw;
+            }
         }
     }
 }

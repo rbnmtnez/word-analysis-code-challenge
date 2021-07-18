@@ -27,8 +27,7 @@ namespace WordAnalysis.Infrastructure.Repositories
 
         public async Task DispatchAsync(TCommand command)
         {
-            var queueEntity = new QueueEntity(command.GetType().Name, JsonConvert.SerializeObject(command));
-            await _queueStorageRepository.QueueItemAsync(_queueStorageOptions.ConnectionString, _queueStorageOptions.QueueName, queueEntity);
+            await _queueStorageRepository.QueueItemAsync(_queueStorageOptions.ConnectionString, _queueStorageOptions.QueueName, command);
         }
     }
 }

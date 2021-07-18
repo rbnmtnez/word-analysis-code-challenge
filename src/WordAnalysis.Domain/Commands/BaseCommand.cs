@@ -8,13 +8,15 @@ namespace WordAnalysis.Domain.Commands
 {
     public class BaseCommand<TResult> : ICommand<TResult> where TResult : class
     {
-        public DateTime DateTime { get; }
         public Guid Id { get;}
+        public DateTime DateTime { get; }
+        public string Type { get; }
 
         public BaseCommand()
         {
-            DateTime = DateTime.UtcNow;
+            Type = this.GetType().Name;
             Id = Guid.NewGuid();
+            DateTime = DateTime.UtcNow;
         }
     }
 }
