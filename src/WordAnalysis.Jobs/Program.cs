@@ -22,6 +22,7 @@ namespace WordAnalysis.Jobs
                 .ConfigureFunctionsWorkerDefaults()
                 .ConfigureServices(s =>
                 {
+                    s.AddLogging();
                     s.AddWordAnalysisJobs();
                     //s.AddSingleton<IHttpResponderService, DefaultHttpResponderService>();
                 })

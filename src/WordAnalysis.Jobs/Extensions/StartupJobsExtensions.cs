@@ -1,12 +1,17 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Polly;
+using Polly.Extensions.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WordAnalysis.Domain.Commands;
 using WordAnalysis.Domain.Commands.Handlers;
 using WordAnalysis.Domain.Model.Aggregates;
+using WordAnalysis.Domain.Services.Interfaces;
+using WordAnalysis.Infrastructure.Repositories;
 using WordAnalysis.Jobs.Services;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -37,7 +42,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static IServiceCollection AddWordAnalysisJobsServices(this IServiceCollection services)
         {
-            services.AddScoped<IWordAnalyticsJobService, WordAnalyticsJobService>();
+            services.AddScoped<IWordAnalysisJobService, WordAnalysisJobService>();
 
             return services;
         }
@@ -64,7 +69,21 @@ namespace Microsoft.Extensions.DependencyInjection
 
             //services.AddScoped(typeof(IQueueStorageRepository<>), typeof(QueueStorageRepository<>));
 
+            services.AddScoped<IWordAnalysisFileDownloaderService, WordAnalysisFileDownloaderRepository>();
+
+            services.AddHttpClient<IWordAnalysisFileDownloaderService, WordAnalysisFileDownloaderRepository>()
+                    .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                    .AddPolicyHandler(GetHttpRetryPolicy());
+
             return services;
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetHttpRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
     }
 }

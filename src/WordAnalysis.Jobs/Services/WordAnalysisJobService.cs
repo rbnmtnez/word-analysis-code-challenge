@@ -8,11 +8,11 @@ using WordAnalysis.Domain.Model.Aggregates;
 
 namespace WordAnalysis.Jobs.Services
 {
-    public class WordAnalyticsJobService : IWordAnalyticsJobService
+    public class WordAnalysisJobService : IWordAnalysisJobService
     {
         private readonly ICommandHandler<ExternalWordCountCalculateCommand, ExternalWordCount> _externalWordCountCalculateCommandHandler;
 
-        public WordAnalyticsJobService(ICommandHandler<ExternalWordCountCalculateCommand, ExternalWordCount> externalWordCountCalculateCommandHandler)
+        public WordAnalysisJobService(ICommandHandler<ExternalWordCountCalculateCommand, ExternalWordCount> externalWordCountCalculateCommandHandler)
         {
             _externalWordCountCalculateCommandHandler = externalWordCountCalculateCommandHandler ?? throw new ArgumentNullException(nameof(externalWordCountCalculateCommandHandler));
         }

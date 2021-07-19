@@ -8,8 +8,4 @@
     <ProjectReference Include="..\WordAnalysis.Domain\WordAnalysis.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

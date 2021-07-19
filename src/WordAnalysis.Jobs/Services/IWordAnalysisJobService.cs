@@ -7,7 +7,7 @@ using WordAnalysis.Domain.Commands;
 
 namespace WordAnalysis.Jobs.Services
 {
-    public interface IWordAnalyticsJobService
+    public interface IWordAnalysisJobService
     {
         Task ProcessExternalWordCountCalculateCommandAsync(ExternalWordCountCalculateCommand command);
     }

@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WordAnalysis.Domain.Commands;
-using WordAnalysis.Domain.Services;
+using WordAnalysis.Domain.Services.Interfaces;
 using WordAnalysis.Infrastructure.Model;
 using WordAnalysis.Infrastructure.Repositories.QueueStorage;
 
 namespace WordAnalysis.Infrastructure.Repositories
 {
-    public class CommandDispatcherRepository<TCommand, TResult> : ICommandDispatcher<TCommand, TResult> where TCommand : ICommand<TResult>
+    public class CommandDispatcherRepository<TCommand, TResult> : ICommandDispatcherService<TCommand, TResult> where TCommand : ICommand<TResult>
     {
         private readonly IQueueStorageRepository<IQueueEntity> _queueStorageRepository;
         private readonly QueueStorageOptions _queueStorageOptions;
