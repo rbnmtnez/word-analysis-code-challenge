@@ -11,7 +11,7 @@ namespace WordAnalysis.Domain.Model.Aggregates
     {
         public string FileLink { get; set; }
 
-        public FileType FileType { get; set; }
+        public Status FileType { get; set; }
 
         public string SourceLanguage { get; set; }
 
@@ -21,7 +21,7 @@ namespace WordAnalysis.Domain.Model.Aggregates
 
         public WordCount TotalWordCount { get; set; }
 
-        public ExternalWordCount(string fileLink, FileType fileType, string sourceLanguage, string callbackUrl, string serviceRequestId, WordCount totalWordCount)
+        public ExternalWordCount(string fileLink, Status fileType, string sourceLanguage, string callbackUrl, string serviceRequestId, WordCount totalWordCount)
         {
             FileLink = fileLink ?? throw new ArgumentNullException(nameof(fileLink));
             FileType = fileType;
@@ -31,7 +31,7 @@ namespace WordAnalysis.Domain.Model.Aggregates
             TotalWordCount = totalWordCount ?? throw new ArgumentNullException(nameof(totalWordCount));
         }
 
-        public ExternalWordCount(string fileLink, FileType fileType, string sourceLanguage, string callbackUrl, string serviceRequestId)
+        public ExternalWordCount(string fileLink, Status fileType, string sourceLanguage, string callbackUrl, string serviceRequestId)
             : this(fileLink, fileType, sourceLanguage, callbackUrl, serviceRequestId, new WordCount())
         {
         }

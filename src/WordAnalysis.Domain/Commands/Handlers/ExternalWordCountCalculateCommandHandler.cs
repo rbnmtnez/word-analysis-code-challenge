@@ -32,7 +32,7 @@ namespace WordAnalysis.Domain.Commands.Handlers
         {
             ExternalWordCount result = new(
                 fileLink: command.FileLink,
-                fileType: Model.ValueObjects.FileType.Succeeded,
+                fileType: Model.ValueObjects.Status.Succeeded,
                 sourceLanguage: command.SourceLanguage,
                 callbackUrl: command.CallbackUrl,
                 serviceRequestId: command.ServiceRequestId
@@ -52,14 +52,12 @@ namespace WordAnalysis.Domain.Commands.Handlers
             {
                 result.FileType =
                     ex.StatusCode == System.Net.HttpStatusCode.NotFound ?
-                    Model.ValueObjects.FileType.DocumentNotFound
-                    : Model.ValueObjects.FileType.Failed;
-                //TODO > LOG
+                    Model.ValueObjects.Status.DocumentNotFound
+                    : Model.ValueObjects.Status.Failed;
             }
             catch (Exception ex)
             {
-                result.FileType = Model.ValueObjects.FileType.Failed;
-                //TODO > LOG
+                result.FileType = Model.ValueObjects.Status.Failed;
             }
 
             await SendCallbackResultsAsync(result);
@@ -69,8 +67,7 @@ namespace WordAnalysis.Domain.Commands.Handlers
 
         private void ValidateCommand(ExternalWordCountCalculateCommand command)
         {
-            //TODO > THINK IF IMPLEMENT OR NOT
-            //throw new NotImplementedException();
+            //Enhancement: validations
         }
 
         private async Task SendCallbackResultsAsync(ExternalWordCount externalWordCount)

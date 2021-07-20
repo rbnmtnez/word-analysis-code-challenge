@@ -15,7 +15,7 @@ namespace WordAnalysis.API.Adapters.MapperProfiles
         public WordCountAnalysisMappingProfile()
         {
             CreateMap<ExternalCountCalculate, ExternalWordCountCalculateCommand>();
-            CreateMap<ExternalFileType, FileType>();
+            CreateMap<ExternalFileType, Status>();
         }
     }
 }

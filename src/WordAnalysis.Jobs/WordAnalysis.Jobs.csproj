@@ -17,6 +17,7 @@
 		<PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\WordAnalysis.Application\WordAnalysis.Application.csproj" />
 	  <ProjectReference Include="..\WordAnalysis.Domain\WordAnalysis.Domain.csproj" />
 	  <ProjectReference Include="..\WordAnalysis.Infrastructure\WordAnalysis.Infrastructure.csproj" />
 	</ItemGroup>

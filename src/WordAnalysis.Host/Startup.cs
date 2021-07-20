@@ -34,19 +34,21 @@ namespace WordAnalysis
             services
                 .AddWordAnalysisServices(Configuration)
                 .AddControllers()
-                .AddWordAnalysisAPIControllers();
+                .AddWordAnalysisAPIControllers()
+                .AddJsonOptions((opts) =>
+                    opts.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter())
+                );
 
             services.AddAutoMapper(typeof(Startup));
-
-            services.AddSwaggerGen(c =>
+                
+            services.AddSwaggerGen(opts =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Word Count Analysis API", Version = "v1" });
-                c.EnableAnnotations();
+                opts.SwaggerDoc("v1", new OpenApiInfo { Title = "Word Count Analysis API", Version = "v1" });
+                opts.EnableAnnotations();
 
-                //TODO > REVIEW xml not getting info
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
+                opts.IncludeXmlComments(xmlPath);
             });
         }
 

@@ -33,6 +33,7 @@ namespace WordAnalysis.Host.Controllers
         [Route("/api/external")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ApiExternalPostAsync([FromBody] ExternalCountCalculate body)
         {
             await _wordService.WordCountExternalAnalysisAsync(body);
