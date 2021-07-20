@@ -68,7 +68,7 @@ namespace WordAnalysis.Host.Extensions
                 options.QueueName = queueStorageQueueName;
             });
 
-            services.AddScoped(typeof(ICommandDispatcherService<ExternalWordCountCalculateCommand, ExternalWordCount>), typeof(CommandDispatcherRepository<ExternalWordCountCalculateCommand, ExternalWordCount>));
+            services.AddScoped(typeof(ICommandDispatcherService<ExternalWordCountCalculateCommand, ExternalWordCount>), typeof(CommandDispatcherService<ExternalWordCountCalculateCommand, ExternalWordCount>));
 
             services.AddScoped(typeof(IQueueStorageRepository<>), typeof(QueueStorageRepository<>));
 

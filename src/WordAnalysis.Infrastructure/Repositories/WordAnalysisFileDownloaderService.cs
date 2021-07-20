@@ -9,12 +9,12 @@ using WordAnalysis.Domain.Services.Interfaces;
 
 namespace WordAnalysis.Infrastructure.Repositories
 {
-    public class WordAnalysisFileDownloaderRepository : IWordAnalysisFileDownloaderService
+    public class WordAnalysisFileDownloaderService : IWordAnalysisFileDownloaderService
     {
         private readonly HttpClient _httpClient;
 
 
-        public WordAnalysisFileDownloaderRepository(HttpClient httpClient)
+        public WordAnalysisFileDownloaderService(HttpClient httpClient)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
