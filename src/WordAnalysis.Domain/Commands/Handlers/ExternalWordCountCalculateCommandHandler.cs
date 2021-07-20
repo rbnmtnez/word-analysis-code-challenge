@@ -15,11 +15,13 @@ namespace WordAnalysis.Domain.Commands.Handlers
     {
         private readonly IWordAnalysisFileDownloaderService _wordAnalysisFileDownloaderService;
         private readonly IWordAnalysisFactory _wordAnalysisFactory;
+        private readonly IWordAnalysisReplyService _wordAnalysisReplyService;
 
-        public ExternalWordCountCalculateCommandHandler(IWordAnalysisFileDownloaderService wordAnalysisFileDownloaderService, IWordAnalysisFactory wordAnalysisFactory)
+        public ExternalWordCountCalculateCommandHandler(IWordAnalysisFileDownloaderService wordAnalysisFileDownloaderService, IWordAnalysisFactory wordAnalysisFactory, IWordAnalysisReplyService wordAnalysisReplyService)
         {
             _wordAnalysisFileDownloaderService = wordAnalysisFileDownloaderService ?? throw new ArgumentNullException(nameof(wordAnalysisFileDownloaderService));
             _wordAnalysisFactory = wordAnalysisFactory ?? throw new ArgumentNullException(nameof(wordAnalysisFactory));
+            _wordAnalysisReplyService = wordAnalysisReplyService ?? throw new ArgumentNullException(nameof(wordAnalysisReplyService));
         }
 
         public async Task<ExternalWordCount> ExecuteAsync(ExternalWordCountCalculateCommand command)
@@ -32,7 +34,8 @@ namespace WordAnalysis.Domain.Commands.Handlers
         {
             ExternalWordCount result = new(
                 fileLink: command.FileLink,
-                fileType: Model.ValueObjects.Status.Succeeded,
+                fileType: command.FileType,
+                status: Model.ValueObjects.Status.Succeeded,
                 sourceLanguage: command.SourceLanguage,
                 callbackUrl: command.CallbackUrl,
                 serviceRequestId: command.ServiceRequestId
@@ -50,17 +53,19 @@ namespace WordAnalysis.Domain.Commands.Handlers
             }
             catch (HttpRequestException ex)
             {
-                result.FileType =
+                result.Status =
                     ex.StatusCode == System.Net.HttpStatusCode.NotFound ?
                     Model.ValueObjects.Status.DocumentNotFound
                     : Model.ValueObjects.Status.Failed;
+                result.AddErrorMessage($"Error getting file from url {command.FileLink}");
             }
             catch (Exception ex)
             {
-                result.FileType = Model.ValueObjects.Status.Failed;
+                result.Status = Model.ValueObjects.Status.Failed;
+                result.AddErrorMessage($"Error processing external word count calculation for url {command.FileLink}");
             }
 
-            await SendCallbackResultsAsync(result);
+            await _wordAnalysisReplyService.SendWordAnalysisResultsAsync(result, command.CallbackUrl);
 
             return result;
         }
@@ -68,12 +73,6 @@ namespace WordAnalysis.Domain.Commands.Handlers
         private void ValidateCommand(ExternalWordCountCalculateCommand command)
         {
             //Enhancement: validations
-        }
-
-        private async Task SendCallbackResultsAsync(ExternalWordCount externalWordCount)
-        {
-            //TODO > IMPLEMENT
-            throw new NotImplementedException();
         }
 
     }
