@@ -13,13 +13,10 @@ namespace WordAnalysis.Infrastructure.Repositories
     {
         private readonly HttpClient _httpClient;
 
-        //TODO > REVIEW LOGGER NOT WORKING
-        //private readonly ILogger _logger;
 
         public WordAnalysisFileDownloaderRepository(HttpClient httpClient)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-            //_logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<byte[]> DownloadFileAsync(string url)

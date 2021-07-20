@@ -47,6 +47,7 @@ namespace Microsoft.Extensions.DependencyInjection
         private static IServiceCollection AddWordAnalysisJobsRepositories(this IServiceCollection services)
         {
             services.AddScoped<IWordAnalysisFileDownloaderService, WordAnalysisFileDownloaderRepository>();
+            services.AddScoped<IWordAnalysisReplyService, WordAnalysisReplyServiceRepository>();
 
             services.AddHttpClient<IWordAnalysisFileDownloaderService, WordAnalysisFileDownloaderRepository>()
                     .SetHandlerLifetime(TimeSpan.FromMinutes(5))
