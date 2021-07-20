@@ -9,7 +9,7 @@ using WordAnalysis.API.Adapters.MapperProfiles;
 using WordAnalysis.API.Services;
 using WordAnalysis.Domain.Commands;
 using WordAnalysis.Domain.Model.Aggregates;
-using WordAnalysis.Domain.Services;
+using WordAnalysis.Domain.Services.Interfaces;
 using WordAnalysis.Host.Controllers;
 using WordAnalysis.Infrastructure.Repositories;
 using WordAnalysis.Infrastructure.Repositories.QueueStorage;
@@ -38,7 +38,7 @@ namespace WordAnalysis.Host.Extensions
         {
             MapperConfiguration mappingConfig = new(mc =>
             {
-                mc.AddProfile(new WordCountAnalyticsMappingProfile());
+                mc.AddProfile(new WordCountAnalysisMappingProfile());
             });
             services.AddSingleton<IMapper>(mappingConfig.CreateMapper());
 
@@ -69,7 +69,7 @@ namespace WordAnalysis.Host.Extensions
                 options.QueueName = queueStorageQueueName;
             });
 
-            services.AddScoped(typeof(ICommandDispatcher<ExternalWordCountCalculateCommand, ExternalWordCount>), typeof(CommandDispatcherRepository<ExternalWordCountCalculateCommand, ExternalWordCount>));
+            services.AddScoped(typeof(ICommandDispatcherService<ExternalWordCountCalculateCommand, ExternalWordCount>), typeof(CommandDispatcherRepository<ExternalWordCountCalculateCommand, ExternalWordCount>));
 
             services.AddScoped(typeof(IQueueStorageRepository<>), typeof(QueueStorageRepository<>));
 

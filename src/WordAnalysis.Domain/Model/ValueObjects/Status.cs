@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace WordAnalysis.Domain.Model.ValueObjects
 {
-    public enum FileType
+    public enum Status
     {
-        MemoQ = 0,
-        TradosStudio = 1,
-        WorldServer = 2
+        Succeeded,
+        Failed, 
+        DocumentNotFound, 
+        FormatNotSupported
     }
 }

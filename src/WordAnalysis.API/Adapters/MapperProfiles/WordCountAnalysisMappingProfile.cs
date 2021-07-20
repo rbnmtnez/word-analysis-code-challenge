@@ -10,12 +10,12 @@ using WordAnalysis.Domain.Model.ValueObjects;
 
 namespace WordAnalysis.API.Adapters.MapperProfiles
 {
-    public class WordCountAnalyticsMappingProfile : Profile
+    public class WordCountAnalysisMappingProfile : Profile
     {
-        public WordCountAnalyticsMappingProfile()
+        public WordCountAnalysisMappingProfile()
         {
             CreateMap<ExternalCountCalculate, ExternalWordCountCalculateCommand>();
-            CreateMap<ExternalFileType, FileType>();
+            CreateMap<ExternalFileType, Status>();
         }
     }
 }

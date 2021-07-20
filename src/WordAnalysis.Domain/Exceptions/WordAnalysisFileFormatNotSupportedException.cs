@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WordAnalysis.Infrastructure.Model
+namespace WordAnalysis.Domain.Exceptions
 {
-    public interface IQueueEntity
+    public class WordAnalysisFileFormatNotSupportedException : Exception
     {
     }
 }

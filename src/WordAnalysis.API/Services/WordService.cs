@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 using WordAnalysis.API.DTOs;
 using WordAnalysis.Domain.Commands;
 using WordAnalysis.Domain.Model.Aggregates;
-using WordAnalysis.Domain.Services;
+using WordAnalysis.Domain.Services.Interfaces;
 
 namespace WordAnalysis.API.Services
 {
     public class WordService : IWordService
     {
-        private readonly ICommandDispatcher<ExternalWordCountCalculateCommand, ExternalWordCount> _externalWordCountCommandDispatcher;
+        private readonly ICommandDispatcherService<ExternalWordCountCalculateCommand, ExternalWordCount> _externalWordCountCommandDispatcher;
         private readonly IMapper _mapper;
 
-        public WordService(ICommandDispatcher<ExternalWordCountCalculateCommand, ExternalWordCount> externalWordCountCommandDispatcher, IMapper mapper)
+        public WordService(ICommandDispatcherService<ExternalWordCountCalculateCommand, ExternalWordCount> externalWordCountCommandDispatcher, IMapper mapper)
         {
             _externalWordCountCommandDispatcher = externalWordCountCommandDispatcher ?? throw new ArgumentNullException(nameof(externalWordCountCommandDispatcher));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

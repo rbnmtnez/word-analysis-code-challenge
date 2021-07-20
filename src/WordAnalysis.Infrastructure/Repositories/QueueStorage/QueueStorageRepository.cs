@@ -9,16 +9,16 @@ using WordAnalysis.Infrastructure.Model;
 
 namespace WordAnalysis.Infrastructure.Repositories.QueueStorage
 {
-    public class QueueStorageRepository<T> : IQueueStorageRepository<T> where T : IQueueEntity
+    public class QueueStorageRepository<T> : IQueueStorageRepository<T> where T : class
     {
         public Task<T> DequeueAndRemoveItemAsync(string connectionString, string queueName)
         {
             throw new NotImplementedException();
         }
 
-        public async Task QueueItemAsync(string connectionString, string queueName, T item)
+        public async Task QueueItemAsync(string connectionString, string queueName, object item)
         {
-            QueueClient queueClient = new QueueClient(connectionString, queueName);
+            QueueClient queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions() { MessageEncoding = QueueMessageEncoding.Base64 });
 
             queueClient.CreateIfNotExists();
 

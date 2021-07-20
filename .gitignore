@@ -15,3 +15,5 @@
 /src/WordAnalysis.Infrastructure/obj
 /src/WordAnalysis.Jobs/bin
 /src/WordAnalysis.Jobs/obj
+/tests/WordAnalaysis.UnitTests/bin
+/tests/WordAnalaysis.UnitTests/obj

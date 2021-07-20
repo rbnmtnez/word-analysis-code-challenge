@@ -1,0 +1,17 @@
+﻿Analysis;;;;;
+Scope;file 1;;;;
+Resources;Every TM and corpus, Homogeneity;;;;
+Type;Segments;Source words;Source chars;Source tags;Percent
+All;69;253;2089;30;100.00
+X-translated / double context;0;0;0;0;0.00
+Repetition;5;16;161;6;6.32
+101%;52;170;1372;9;67.19
+100%;2;2;2;0;0.79
+95%-99%;0;0;0;0;0.00
+85%-94%;0;0;0;0;0.00
+75%-84%;2;13;102;0;5.14
+50%-74%;5;23;204;12;9.09
+Fragments;0;0;0;0;0.00
+No match;3;29;248;3;11.46
+;;;;;
+------------------------------------------------------------------------------------;;;;;
