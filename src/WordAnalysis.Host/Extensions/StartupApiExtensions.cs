@@ -57,7 +57,6 @@ namespace WordAnalysis.Host.Extensions
             return services;
         }
 
-
         private static IServiceCollection AddWordAnalysisRepositories(this IServiceCollection services, IConfiguration configuration)
         {
             string queueStorageConnectionString = configuration.GetConnectionString("QueueStorageConnectionString");

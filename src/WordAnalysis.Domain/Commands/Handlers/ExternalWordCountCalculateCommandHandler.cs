@@ -26,12 +26,6 @@ namespace WordAnalysis.Domain.Commands.Handlers
 
         public async Task<ExternalWordCount> ExecuteAsync(ExternalWordCountCalculateCommand command)
         {
-            this.ValidateCommand(command);
-            return await this.ProcessCommandAsync(command);
-        }
-
-        private async Task<ExternalWordCount> ProcessCommandAsync(ExternalWordCountCalculateCommand command)
-        {
             ExternalWordCount result = new(
                 fileLink: command.FileLink,
                 fileType: command.FileType,
@@ -47,9 +41,16 @@ namespace WordAnalysis.Domain.Commands.Handlers
 
                 string fileName = Path.GetFileName(new Uri(command.FileLink).LocalPath);
                 IWordAnalysisService wordAnalyser = _wordAnalysisFactory.GetWordAnalyser(fileName, fileContent);
-
-                WordCountAnalysis wordCountAnalysis = wordAnalyser.GetWordCountAnalysis();
-                result.TotalWordCount = wordCountAnalysis.GetSummary();
+                if(wordAnalyser == null)
+                {
+                    result.Status = Model.ValueObjects.Status.FormatNotSupported;
+                    result.AddErrorMessage($"Format not supported, analyser not available for url {command.FileLink}");
+                }
+                else
+                {
+                    WordCountAnalysis wordCountAnalysis = wordAnalyser.GetWordCountAnalysis();
+                    result.TotalWordCount = wordCountAnalysis.GetSummary();
+                }
             }
             catch (HttpRequestException ex)
             {
@@ -59,7 +60,7 @@ namespace WordAnalysis.Domain.Commands.Handlers
                     : Model.ValueObjects.Status.Failed;
                 result.AddErrorMessage($"Error getting file from url {command.FileLink}");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 result.Status = Model.ValueObjects.Status.Failed;
                 result.AddErrorMessage($"Error processing external word count calculation for url {command.FileLink}");
@@ -68,11 +69,6 @@ namespace WordAnalysis.Domain.Commands.Handlers
             await _wordAnalysisReplyService.SendWordAnalysisResultsAsync(result, command.CallbackUrl);
 
             return result;
-        }
-
-        private void ValidateCommand(ExternalWordCountCalculateCommand command)
-        {
-            //Enhancement: validations
         }
 
     }
