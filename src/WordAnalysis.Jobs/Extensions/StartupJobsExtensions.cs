@@ -43,7 +43,6 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-
         private static IServiceCollection AddWordAnalysisJobsRepositories(this IServiceCollection services)
         {
             services.AddScoped<IWordAnalysisFileDownloaderService, WordAnalysisFileDownloaderRepository>();

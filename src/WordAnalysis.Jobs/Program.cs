@@ -24,7 +24,6 @@ namespace WordAnalysis.Jobs
                 {
                     s.AddLogging();
                     s.AddWordAnalysisJobs();
-                    //s.AddSingleton<IHttpResponderService, DefaultHttpResponderService>();
                 })
                 .Build();
 
