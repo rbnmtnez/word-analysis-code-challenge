@@ -45,12 +45,15 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static IServiceCollection AddWordAnalysisJobsRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IWordAnalysisFileDownloaderService, WordAnalysisFileDownloaderRepository>();
-            services.AddScoped<IWordAnalysisReplyService, WordAnalysisReplyServiceRepository>();
-
-            services.AddHttpClient<IWordAnalysisFileDownloaderService, WordAnalysisFileDownloaderRepository>()
+            services.AddScoped<IWordAnalysisFileDownloaderService, WordAnalysisFileDownloaderService>();
+            services.AddHttpClient<IWordAnalysisFileDownloaderService, WordAnalysisFileDownloaderService>()
                     .SetHandlerLifetime(TimeSpan.FromMinutes(5))
                     .AddPolicyHandler(GetHttpRetryPolicy());
+
+            services.AddScoped<IWordAnalysisReplyService, WordAnalysisReplyService>();
+            services.AddHttpClient<IWordAnalysisReplyService, WordAnalysisReplyService>()
+                   .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                   .AddPolicyHandler(GetHttpRetryPolicy());
 
             return services;
         }

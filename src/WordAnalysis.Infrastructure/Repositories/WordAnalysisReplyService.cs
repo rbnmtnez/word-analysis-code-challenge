@@ -10,11 +10,11 @@ using WordAnalysis.Domain.Services.Interfaces;
 
 namespace WordAnalysis.Infrastructure.Repositories
 {
-    public class WordAnalysisReplyServiceRepository : IWordAnalysisReplyService
+    public class WordAnalysisReplyService: IWordAnalysisReplyService
     {
         private readonly HttpClient _httpClient;
 
-        public WordAnalysisReplyServiceRepository(HttpClient httpClient)
+        public WordAnalysisReplyService(HttpClient httpClient)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }

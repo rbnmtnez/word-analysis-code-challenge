@@ -12,12 +12,12 @@ using WordAnalysis.Infrastructure.Repositories.QueueStorage;
 
 namespace WordAnalysis.Infrastructure.Repositories
 {
-    public class CommandDispatcherRepository<TCommand, TResult> : ICommandDispatcherService<TCommand, TResult> where TCommand : ICommand<TResult>
+    public class CommandDispatcherService<TCommand, TResult> : ICommandDispatcherService<TCommand, TResult> where TCommand : ICommand<TResult>
     {
         private readonly IQueueStorageRepository<IQueueEntity> _queueStorageRepository;
         private readonly QueueStorageOptions _queueStorageOptions;
 
-        public CommandDispatcherRepository(IQueueStorageRepository<IQueueEntity> queueStorageRepository, IOptions<QueueStorageOptions> queueStorageOptions)
+        public CommandDispatcherService(IQueueStorageRepository<IQueueEntity> queueStorageRepository, IOptions<QueueStorageOptions> queueStorageOptions)
         {
             _queueStorageRepository = queueStorageRepository ?? throw new ArgumentNullException(nameof(queueStorageRepository));
 

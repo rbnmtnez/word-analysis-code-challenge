@@ -11,7 +11,7 @@ namespace WordAnalaysis.UnitTests.Services
     public class CSVWordAnalysisServiceTest
     {
         [Fact]
-        public async Task CSWordAnalysisFileWithOneAnalysisResultTest()
+        public void CSWordAnalysisFileWithOneAnalysisResultTest()
         {
             byte[] fileContent = GetEmbeddedFileContent("Resources.ExtWA_MemoQ_1Section.csv");
 
